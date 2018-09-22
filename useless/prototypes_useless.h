@@ -22,3 +22,4 @@ void list_destroy(struct List * list);
 void command_destroy(struct Command * command);
 char * load_file();
 void arr_fill(FILE * stream, char * array);
+void dot_print(struct List * strings);

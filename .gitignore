@@ -1,3 +1,5 @@
 *.o
 makefile*
 bin/
+*.dot
+*.png

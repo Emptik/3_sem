@@ -3,7 +3,7 @@
 struct List * list_init() {
 	struct List * date = NULL;
 	date = (struct List *)calloc(1, sizeof(struct List));
-	date->lines = (struct Command **)calloc(100, sizeof(struct Command **));
+	date->lines = (struct Command **)calloc(100, sizeof(struct Command *));
 	date->number_of_commands = 0;
 	return date;
 }
@@ -12,7 +12,7 @@ struct Command * command_init() {
 	struct Command * date = NULL;
 	date = (struct Command *)calloc(1, sizeof(struct List));
 	date->response_time = 0;
-	date->instruction = (char*)calloc(100, sizeof(char));
+	date->instruction = NULL;
 	return date;
 }
 
@@ -25,10 +25,7 @@ char * load_file() {
 		exit(1);
 	}
 	arr_fill(f_in, strings);
-	int i = 0;
-	for(; i < 10000 ; i++) {
-		printf("%c", strings[i]);
-	}
+	fclose(f_in);
 	return strings;
 }
 
@@ -44,4 +41,16 @@ void arr_fill(FILE * stream, char * array) {
 		if(symbol == EOF) break;
 		array[counter] = symbol;
 	}
+}
+
+void list_destroy(struct List * list) {
+	assert(list);
+	assert(list->lines);
+	int counter = 0;
+	for(; counter < list->number_of_commands; counter++) {
+		printf("kek");
+		free(list->lines[counter]);
+	}
+	free(list->lines);
+	free(list);
 }
