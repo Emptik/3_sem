@@ -1,0 +1,5 @@
+4	pwd
+5	ls -la
+12	ps aux
+3	>zero
+6	man man	
