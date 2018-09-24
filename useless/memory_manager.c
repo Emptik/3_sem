@@ -48,7 +48,6 @@ void list_destroy(struct List * list) {
 	assert(list->lines);
 	int counter = 0;
 	for(; counter < list->number_of_commands; counter++) {
-		printf("kek");
 		free(list->lines[counter]);
 	}
 	free(list->lines);
