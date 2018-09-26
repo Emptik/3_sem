@@ -3,14 +3,21 @@
 #include <string.h>
 #include <assert.h>
 
+// FIXIT: 1) неясно из названия List, зачем нужна структура. Поля структуры показывают, что это не абстрактный список.
+// 2) видимо lines - мн. ч.
+
 struct List {
 	int number;
 	char ** line;
 };
 
+// 1) В названии ф-и глагол - splitString видимо. 2) Обычно сначала идут input аргументы, потом output
+// 3) разные стили именования (давайте на семинаре этот момент обсудим)
 struct List * strings_division(struct List * output, char * array_intput, char * special_symbols);
 void Destroy(struct List * line);
 struct List * New();
+
+// FIXIT: магические числа 100 и 20 надо вынести в константы с ясным именем.
 
 int main() {
 	struct List * line = NULL;
@@ -51,6 +58,8 @@ struct List * strings_division(struct List * output, char * array, char * array_
 	int counter_2 = 0;
 	output = New();
 	assert(output);
+	
+	// FIXIT: код ниже повторяет функционал strtok. давайте просто воспользуемся готовой ф-ей. кода будет меньше.
 	output->line[output->number] = array;
 	output->number++;
 	for(; array[counter_1] != '\0'; counter_1++) {
