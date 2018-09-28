@@ -3,3 +3,4 @@ makefile*
 bin/
 *.dot
 *.png
+lesson
