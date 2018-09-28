@@ -3,88 +3,88 @@
 #include <string.h>
 #include <assert.h>
 
-// FIXIT: 1) неясно из названия List, зачем нужна структура. Поля структуры показывают, что это не абстрактный список.
-// 2) видимо lines - мн. ч.
+#define MAX_STRING_SIZE								1000
+#define MAX_DELIMITER_NUMBER					20
+#define MAX_LINES_NUMBER							100
 
-struct List {
-	int number;
-	char ** line;
+
+struct lines_storage {
+	size_t number_of_lines;
+	char ** lines;
 };
 
-// 1) В названии ф-и глагол - splitString видимо. 2) Обычно сначала идут input аргументы, потом output
-// 3) разные стили именования (давайте на семинаре этот момент обсудим)
-struct List * strings_division(struct List * output, char * array_intput, char * special_symbols);
-void Destroy(struct List * line);
-struct List * New();
 
-// FIXIT: магические числа 100 и 20 надо вынести в константы с ясным именем.
+struct lines_storage *divide_string					(char *your_string, char *special_symbols, struct lines_storage *output);
+void 																destroy_struct(struct lines_storage * line);
+struct lines_storage *									create_struct();
+void																	fill_array(char * input_string, char * symbols);
+
 
 int main() {
-	struct List * line = NULL;
-	char input_string[100] = {0};
-	char symbols[20] = {0};
-	int counter = -1;
-	fprintf(stderr, "Enter your string, use \\n to complete the line input:\n");
-	do {
-		counter++;
-		assert(counter < 100);
-		input_string[counter] = getchar();
-	} while( input_string[counter] != '\n');
-	input_string[counter] = '\0';
-	counter = -1;
-	fprintf(stderr, "Enter your tokens, use \\n to complete the line input:\n");
-	do {
-		counter++;
-		assert(counter < 20);
-		symbols[counter] = getchar();
-	} while(symbols[counter] != '\n');
-	symbols[counter] = '\0';
-	line = strings_division(line, input_string, symbols);
-	assert(line->number);
+	int i = 0;
+	struct lines_storage * date = NULL;
+	char input_string[MAX_STRING_SIZE] = {0};
+	char delimitors[MAX_DELIMITER_NUMBER] = {0};
+	fill_array(input_string, delimitors);
+	date = divide_string(input_string, delimitors, date);
 	printf("\nYour strings: \n");
-	for(counter = 0; counter < line->number; counter++) {
-		assert(line->line[counter]);
-		printf("%s\n", line->line[counter]);
+	for (i = 0; i < date->number_of_lines; i++) {
+		assert(date->lines[i]);
+		printf("%s\n", date->lines[i]);
 	}
-	printf("The number of strings: %d\n", line->number);
-	Destroy(line);
+	printf("The number of strings: %lu\n", date->number_of_lines);
+	destroy_struct(date);
 	return 0;
 }
 
-struct List * strings_division(struct List * output, char * array, char * array_sign) {
+
+
+void fill_array(char * input_string, char * symbols) {
+	int i = -1;
+	printf("Enter your string, use \\n to complete the line input:\n");
+	do {
+		i++;
+		if (i >= MAX_STRING_SIZE) {
+			printf("Too big string\n");
+			exit(1);
+		}
+		input_string[i] = getchar();
+	} while (input_string[i] != '\n');
+	input_string[i] = '\0';
+	i = -1;
+	printf("Enter your tokens, use \\n to complete the line input:\n");
+	do {
+		i++;
+		if (i >= MAX_DELIMITER_NUMBER) {
+			printf("Too big number of delemitors\n");
+			exit(2);
+		}
+		symbols[i] = getchar();
+	} while (symbols[i] != '\n');
+	symbols[i] = '\0';
+}
+
+struct lines_storage *divide_string(char *your_string, char *special_symbols, struct lines_storage *output) {
 	assert(!output);
-	int array_lenght = 0;
-	int counter_1 = 0;
-	int counter_2 = 0;
-	output = New();
-	assert(output);
-	
-	// FIXIT: код ниже повторяет функционал strtok. давайте просто воспользуемся готовой ф-ей. кода будет меньше.
-	output->line[output->number] = array;
-	output->number++;
-	for(; array[counter_1] != '\0'; counter_1++) {
-		for(counter_2 = 0; array_sign[counter_2] != '\0'; counter_2++) {
-			if(array[counter_1] == array_sign[counter_2]) array[counter_1] = '\0';
-		}
+	output = create_struct();
+	output->number_of_lines++;
+	output->lines[output->number_of_lines - 1] = strtok(your_string, special_symbols);
+	while (output->lines[output->number_of_lines - 1] != NULL) {
+		output->number_of_lines++;
+		output->lines[output->number_of_lines - 1] = strtok(NULL, special_symbols);
 	}
-	array_lenght = counter_1;
-	for(counter_1 = 0; counter_1 < array_lenght; counter_1++) {
-		if(array[counter_1] == '\0' && array[counter_1 + 1] != '\0') {
-		output->line[output->number] = array + counter_1 + 1;
-		output->number++;
-		}
-	}
+	output->number_of_lines--;
 	return output;
 }
 
-void Destroy(struct List * line) {
-	free(line->line);
+void destroy_struct(struct lines_storage *line) {
+	free(line->lines);
 	free(line);
 }
 
-struct List * New() {
-	struct List * output = NULL;
-	output = (struct List *)calloc(1, sizeof(struct List));
-	output->line = (char**)calloc(100, sizeof(char*));
+struct lines_storage *create_struct() {
+	struct lines_storage * output = NULL;
+	output = (struct lines_storage *)calloc(1, sizeof(struct lines_storage));
+	output->lines = (char**)calloc(MAX_LINES_NUMBER, sizeof(char*));
 	return output;
 }
