@@ -3,9 +3,9 @@
 #include <string.h>
 #include <assert.h>
 
-#define MAX_STRING_SIZE								1000
-#define MAX_DELIMITER_NUMBER					20
-#define MAX_LINES_NUMBER							100
+#define MAX_STRING_SIZE					1000
+#define MAX_DELIMITER_NUMBER		20
+#define MAX_LINES_NUMBER				100
 
 
 struct lines_storage {
@@ -14,10 +14,10 @@ struct lines_storage {
 };
 
 
-struct lines_storage *divide_string					(char *your_string, char *special_symbols, struct lines_storage *output);
-void 																destroy_struct(struct lines_storage * line);
-struct lines_storage *									create_struct();
-void																	fill_array(char * input_string, char * symbols);
+struct lines_storage *divide_string		(char *your_string, char *special_symbols, struct lines_storage *output);
+void 													destroy_struct(struct lines_storage * line);
+struct lines_storage *						create_struct();
+void														fill_array(char * input_string, char * symbols);
 
 
 int main() {
