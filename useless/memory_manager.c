@@ -1,55 +1,43 @@
-#include "prototypes_useless.h"
+#include "prototypes.h"
 
-struct List * list_init() {
-	struct List * date = NULL;
-	date = (struct List *)calloc(1, sizeof(struct List));
-	date->lines = (struct Command **)calloc(100, sizeof(struct Command *));
+struct command_storage * init_storage() {
+	struct command_storage *date = NULL;
+	date = (struct command_storage*)calloc(1, sizeof(struct command_storage));
+	date->lines = (struct instruction_line**)calloc(100, sizeof(struct instruction_line*));
 	date->number_of_commands = 0;
 	return date;
 }
 
-struct Command * command_init() {
-	struct Command * date = NULL;
-	date = (struct Command *)calloc(1, sizeof(struct List));
+struct instruction_line *init_instruction() {
+	struct instruction_line *date = NULL;
+	date = (struct instruction_line*)calloc(1, sizeof(struct instruction_line));
 	date->response_time = 0;
 	date->instruction = NULL;
 	return date;
 }
 
-char * load_file() {
-	char * strings = (char*)calloc(10000, sizeof(char));
-	FILE * f_in = NULL;
-	f_in = fopen("command_file", "r");
-	if(!f_in) {
-		perror("f_in");
-		exit(1);
-	}
-	arr_fill(f_in, strings);
-	fclose(f_in);
-	return strings;
+char *fill_arr() {
+	char * input_string = calloc(STRING_MAX_SIZE, sizeof(char));
+	int i = -1;
+	do {
+		i++;
+		if (i >= STRING_MAX_SIZE) {
+			printf("Too big string\n");
+			exit(1);
+		}
+		input_string[i] = getchar();
+	} while (input_string[i] != EOF);
+	input_string[i] = '\0';
+	return input_string;
 }
 
-void arr_fill(FILE * stream, char * array) {
-	assert(array);
-	assert(stream);
-	int counter = 0;
-	int symbol = 0;
-	for(; ; counter++)
-	{
-		assert(counter < 9990);
-		symbol = fgetc(stream);
-		if(symbol == EOF) break;
-		array[counter] = symbol;
+void destroy_storage(struct command_storage * date) {
+	assert(date);
+	assert(date->lines);
+	int i = 0;
+	for(; i < date->number_of_commands; i++) {
+		if(date->lines[i]) free(date->lines[i]);
 	}
-}
-
-void list_destroy(struct List * list) {
-	assert(list);
-	assert(list->lines);
-	int counter = 0;
-	for(; counter < list->number_of_commands; counter++) {
-		free(list->lines[counter]);
-	}
-	free(list->lines);
-	free(list);
+	free(date->lines);
+	free(date);
 }

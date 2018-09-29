@@ -1,14 +1,16 @@
-#include "prototypes_useless.h"
+#include "prototypes.h"
 
-int main()
+int main(int argc, char *argv[])
 {
 	char * text = NULL;
-	struct List * division = NULL;
-	text = load_file();
+	struct command_storage * division = NULL;
+	time_out = atoi(argv[1]);
+	text = fill_arr();
 	assert(text);
-	division = split(division, text);
+	division = make_split(division, text);
 	dot_print(division);
-	list_destroy(division);
+	work(division);
+	destroy_storage(division);
 	free(text);
 	return 0;
 }

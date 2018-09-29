@@ -15,7 +15,7 @@ struct lines_storage {
 
 
 struct lines_storage *divide_string		(char *your_string, char *special_symbols, struct lines_storage *output);
-void	destroy_struct		(struct lines_storage * line);
+void destroy_struct		(struct lines_storage * line);
 struct lines_storage *create_struct		();
 void fill_array		(char * input_string, char * symbols);
 
