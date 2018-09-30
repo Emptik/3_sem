@@ -7,13 +7,16 @@
 #define MAX_DELIMITER_NUMBER	20
 #define MAX_LINES_NUMBER	100
 
-
+// почему вы решили назвать эти структуру "хранилище строк"?
+// почему не "words" или "tokens"?
 struct lines_storage {
 	size_t number_of_lines;
 	char ** lines;
 };
 
-
+// что-то странное у вас с отступами в следующих 4х строках
+// как-то не можете вы определиться, ставите ли вы пробелы вокруг * и где именно ... сейчас у вас 2 варианта присутствуют ... char * c; и char *c;
+// кажется из назнаний ф-й можно убрать string, struct и array без особой потери ясности, т.к. из названия первого параметра ф-й итак это ясно 
 struct lines_storage *divide_string		(char *your_string, char *special_symbols, struct lines_storage *output);
 void destroy_struct		(struct lines_storage * line);
 struct lines_storage *create_struct		();
@@ -42,6 +45,7 @@ int main() {
 void fill_array(char * input_string, char * symbols) {
 	int i = -1;
 	printf("Enter your string, use \\n to complete the line input:\n");
+	// FIXIT: вы написали свою fgets. Давайте готовой ф-ей воспользуемся
 	do {
 		i++;
 		if (i >= MAX_STRING_SIZE) {
@@ -65,8 +69,10 @@ void fill_array(char * input_string, char * symbols) {
 }
 
 struct lines_storage *divide_string(char *your_string, char *special_symbols, struct lines_storage *output) {
+	// FIXIT: последний параметр не нужно передавать в ф-ю. вы же явно главное проверяется, что именно NULL передали на вход, и в итоге с помощью return эту структуру возвращается :)
 	assert(!output);
 	output = create_struct();
+	// FIXIT: вы лишний раз прибавили 1, а потом везде вычитаете её. может просто не прибавлять изначатьно?
 	output->number_of_lines++;
 	output->lines[output->number_of_lines - 1] = strtok(your_string, special_symbols);
 	while (output->lines[output->number_of_lines - 1] != NULL) {
