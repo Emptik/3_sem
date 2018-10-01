@@ -3,8 +3,7 @@
 #include <assert.h>
 #include <stdlib.h>
 
-// Надеюсь, вы прочитали в интернете, что означает статическая ф-я и каких проблем слово static в сможет спасти теоретически.
-static void generate_string(int latest_letter_number, char * output_string);
+void generate_string(int latest_letter_number, char * output_string);
 
 int main()
 {
@@ -18,10 +17,9 @@ int main()
 	return 0;
 }
 
-static void generate_string(int latest_letter_number, char * output_string)
+void generate_string(int latest_letter_number, char * output_string)
 {
-	// Написав 'z' - 'a' + 1 вместо 28 вы яснее продемонстрируете свои намерения, как мне кажется.
-	if (latest_letter_number > 28 || latest_letter_number < 0) {
+	if (latest_letter_number > ('z' - 'a' + 1) || latest_letter_number < 0) {
 		printf("Big number or negative number\n");
 		exit(1);
 	}
