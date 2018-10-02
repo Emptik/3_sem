@@ -3,5 +3,5 @@ An example of launching file:
 ./useless <command_file x
 
 x - time out(your proccer will be killed in x seconds)
-command_file - file with commands(it must contain '/n' at the end)
+command_file - file with commands(it must contain '/n' at the end and '/t' between the time process will run and command line)
 
