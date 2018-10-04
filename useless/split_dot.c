@@ -1,24 +1,22 @@
 #include "prototypes.h"
 
-struct command_storage *make_split(struct command_storage *output, char *array_data) {
+struct command_storage *make_split(char *array_data) {
 	char * array_to_intenger[1] = {0};
-	output = init_storage();
-	output->number_of_commands++;
-	output->lines[output->number_of_commands - 1] = init_instruction();
+	struct command_storage * output = init_storage();
+	output->lines[output->number_of_commands] = init_instruction();
 	array_to_intenger[0] = strtok(array_data, "\t");
-	if(*array_to_intenger[0]) output->lines[output->number_of_commands - 1]->response_time = atoi(array_to_intenger[0]);
-	output->lines[output->number_of_commands - 1]->instruction = strtok(NULL, "\n");
+	if(*array_to_intenger[0]) output->lines[output->number_of_commands]->response_time = atoi(array_to_intenger[0]);
+	output->lines[output->number_of_commands]->instruction = strtok(NULL, "\n");
 	
-	while (output->lines[output->number_of_commands - 1]->instruction != NULL) {
+	while (output->lines[output->number_of_commands]->instruction != NULL) {
 		output->number_of_commands++;
-		output->lines[output->number_of_commands - 1] = init_instruction();
+		output->lines[output->number_of_commands] = init_instruction();
 		array_to_intenger[0] = strtok(NULL, "\t");
-		if(*array_to_intenger[0]) output->lines[output->number_of_commands - 1]->response_time = atoi(array_to_intenger[0]);
-		output->lines[output->number_of_commands - 1]->instruction = strtok(NULL, "\n");
+		if(*array_to_intenger[0]) output->lines[output->number_of_commands]->response_time = atoi(array_to_intenger[0]);
+		output->lines[output->number_of_commands]->instruction = strtok(NULL, "\n");
 	}
 	
-	free(output->lines[output->number_of_commands - 1]);
-	output->number_of_commands--;
+	free(output->lines[output->number_of_commands]);
 	return output;
 }
 

@@ -29,7 +29,7 @@ void destroy_storage(struct command_storage *pack);
 void destroy_instruction(struct instruction_line *command);
 char *fill_arr();
 
-struct command_storage *make_split(struct command_storage *output, char *array_data);
+struct command_storage *make_split(char *array_data);
 void dot_print(struct command_storage * strings);
 
 void work(struct command_storage * my_struct);
