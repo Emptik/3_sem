@@ -17,7 +17,6 @@ void destroy(struct words *line);
 struct words *create();
 void fill(char *input_string, char *symbols);
 
-
 int main() {
 	int i = 0;
 	struct words *date = NULL;
@@ -34,8 +33,6 @@ int main() {
 	destroy(date);
 	return 0;
 }
-
-
 
 void fill(char *input_string, char *symbols) {
 	printf("Enter your string, use \\n to complete the line input:\n");
