@@ -1,4 +1,10 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <assert.h>
+#include "manager.h"
 #include "prototypes.h"
+#include "split.h"
 
 struct command_storage *make_split(char *array_data) {
 	char * array_to_intenger[1] = {0};

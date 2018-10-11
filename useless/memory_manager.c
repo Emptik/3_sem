@@ -1,25 +1,28 @@
+#include <stdio.h>
+#include <assert.h>
+#include <stdlib.h>
+#include <string.h>
+#include "manager.h"
+#include "macro.h"
 #include "prototypes.h"
 
 struct command_storage * init_storage() {
-	// data?
-	struct command_storage *date = NULL;
-	date = (struct command_storage*)calloc(1, sizeof(struct command_storage));
-	// FIXIT: 100 нужно вынести в отдельную константу
-	// можно хотя бы строкой выше написать const int ... = 100;
-	date->lines = (struct instruction_line**)calloc(100, sizeof(struct instruction_line*));
-	date->number_of_commands = 0;
-	return date;
+	struct command_storage *data = NULL;
+	data = (struct command_storage*)calloc(1, sizeof(struct command_storage));
+	data->lines = (struct instruction_line**)calloc(INSTRUCTION_MAX_SIZE, sizeof(struct instruction_line*));
+	data->number_of_commands = 0;
+	return data;
 }
 
 struct instruction_line *init_instruction() {
-	struct instruction_line *date = NULL;
-	date = (struct instruction_line*)calloc(1, sizeof(struct instruction_line));
-	date->response_time = 0;
-	date->instruction = NULL;
-	return date;
+	struct instruction_line *data = NULL;
+	data = (struct instruction_line*)calloc(1, sizeof(struct instruction_line));
+	data->response_time = 0;
+	data->instruction = NULL;
+	return data;
 }
 
-char *fill_arr() {
+char *read_input() {
 	char * input_string = calloc(STRING_MAX_SIZE, sizeof(char));
 	int i = -1;
 	do {
@@ -34,13 +37,13 @@ char *fill_arr() {
 	return input_string;
 }
 
-void destroy_storage(struct command_storage * date) {
-	assert(date);
-	assert(date->lines);
+void destroy_storage(struct command_storage * data) {
+	assert(data);
+	assert(data->lines);
 	int i = 0;
-	for(; i < date->number_of_commands; i++) {
-		if(date->lines[i]) free(date->lines[i]);
+	for(; i < data->number_of_commands; i++) {
+		if(data->lines[i]) free(data->lines[i]);
 	}
-	free(date->lines);
-	free(date);
+	free(data->lines);
+	free(data);
 }
