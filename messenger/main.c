@@ -13,7 +13,7 @@
 #define MAX_MESSAGE_SIZE 100
 #define ARRAY_SIZE 1000
 
-void client_work(int * fd, char * input, char * output, int write_pid, int print_pid);
+void client_work(int *fd, char *input, char *output, int write_pid, int print_pid);
 
 int main(int argc, char *argv[], char *envp[]) {
 	int fd[2] = {0};
@@ -32,7 +32,7 @@ int main(int argc, char *argv[], char *envp[]) {
 			client_work(fd, input, output, write_pid, print_pid);
 		}
 	}
-	if(atoi(argv[1])== SECOND_CLIENT) {
+	if(atoi(argv[1]) == SECOND_CLIENT) {
 		if(!write_pid) fd[1] = open("2_client_input", O_WRONLY);
 		if(!print_pid && write_pid) fd[0] = open("1_client_input", O_RDONLY);
 		while(1) {
@@ -42,7 +42,7 @@ int main(int argc, char *argv[], char *envp[]) {
 	return 0;
 }
 
-void client_work(int * fd, char * input, char * output, int write_pid, int print_pid) {
+void client_work(int *fd, char *input, char *output, int write_pid, int print_pid) {
 	if(!write_pid && !print_pid) {
 		fgets(input, MAX_MESSAGE_SIZE, stdin);
 		write(fd[1], input, MAX_MESSAGE_SIZE);
