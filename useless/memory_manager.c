@@ -1,8 +1,11 @@
 #include "prototypes.h"
 
 struct command_storage * init_storage() {
+	// data?
 	struct command_storage *date = NULL;
 	date = (struct command_storage*)calloc(1, sizeof(struct command_storage));
+	// FIXIT: 100 нужно вынести в отдельную константу
+	// можно хотя бы строкой выше написать const int ... = 100;
 	date->lines = (struct instruction_line**)calloc(100, sizeof(struct instruction_line*));
 	date->number_of_commands = 0;
 	return date;
