@@ -3,4 +3,4 @@ bin/
 *.dot
 *.png
 lesson
-pth.c
+thread/pth.c
