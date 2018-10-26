@@ -23,6 +23,9 @@ int main(int argc, char *argv[], char *envp[]) {
 	pid_t print_pid = 0;
 	mkfifo("1_client_input", 0777);
 	mkfifo("2_client_input", 0777);
+	
+	// FIXIT: кажется, что одного fork вполне достаточно. и как раз пропадут сложные логические выражения с !print_pid и !write_pid
+	// Еще теоретически для сокращения объема кода может быть удобен тернарный оператор условие ? выражение1 : выражение2
 	write_pid = fork();
 	if(write_pid) print_pid = fork();
 	if(atoi(argv[1]) == FIRST_CLIENT) {
