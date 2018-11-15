@@ -9,6 +9,11 @@
 #include <sys/wait.h>
 #include <time.h>
 
+/*
+Думаю, если измерить wall-clock time, то ускорение будет видно из цифр
+https://stackoverflow.com/questions/2962785/c-using-clock-to-measure-time-in-multi-threaded-programs/2962914#2962914
+*/
+
 #define AMOUNT_OF_DATA 100000000
 #undef RAND_MAX 
 #define RAND_MAX 50
