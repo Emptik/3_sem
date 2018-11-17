@@ -5,5 +5,5 @@ class wiper {
 public:
 	wiper();
 	wiper(char *array);
-	void show_values();
+	void show_all_values();
 };

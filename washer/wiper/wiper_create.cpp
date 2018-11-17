@@ -1,4 +1,4 @@
- #include <cstring> 
+#include <cstring> 
 #include <iostream>
 #include <cstdlib>
 #include <assert.h>
@@ -25,7 +25,7 @@ void wiper::push_wipe_time() {
 	}
 }
 
-void wiper::show_values() {
+void wiper::show_all_values() {
 	cout << "dish_type: " << dish_type << endl;
 	cout << "wipe_time: " << wipe_time << endl;
 }

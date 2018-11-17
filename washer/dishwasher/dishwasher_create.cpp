@@ -36,7 +36,7 @@ void dishwasher::push_number_of_dishes() {
 	}
 }
 
-void dishwasher::show_values() {
+void dishwasher::show_all_values() {
 	cout << "dish_type: " << dish_type << endl;
 	cout << "wash_time: " << wash_time << endl;
 	cout << "number_of_dishes: " << number_of_dishes << endl;

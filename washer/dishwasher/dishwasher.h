@@ -7,5 +7,7 @@ class dishwasher {
 public:
 	dishwasher();
 	dishwasher(char *array);
-	void show_values();
+	void show_all_values();
+	int get_wash_time() { return wash_time; }
+	char *get_dish_type() { return dish_type; }
 }; 
