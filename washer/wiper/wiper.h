@@ -6,4 +6,6 @@ public:
 	wiper();
 	wiper(char *array);
 	void show_all_values();
+	char *get_dish_type() { return dish_type; }
+	int get_wipe_time() { return wipe_time; }
 };

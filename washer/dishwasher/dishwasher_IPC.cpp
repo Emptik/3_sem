@@ -1,37 +1,41 @@
-#include <fcntl.h>
-#include <unistd.h>
 #include <sys/types.h>
-#include <sys/stat.h>
-#include <cerrno>
+#include <sys/ipc.h>
+#include <sys/msg.h>
+#include <unistd.h>
 #include <cstdlib>
-#include <cstdio>
 
 #include "dishwasher.h"
 #include "../macro.h"
+#include "../message_object.h"
 
 void wash(int time) {
 	for(int i = 0; i < time; i++);
 }
-
-void write_in_fifo(int fd, char *input) {
-	if(write(fd, input, MAX_TYPE_SIZE) < 0) {
-		perror("write_dishwasher");
+	
+void dishwasher_interact(class dishwasher *all_dishes) {
+	
+	char pathname[]= "../macro.h";
+	key_t key = 0;
+	key = ftok(pathname, 0);
+	int msqid = msgget(key, 0666 | IPC_CREAT);
+	
+	class message mes[QUANTITY_OF_DISH_TYPES] = {};
+	int message_number = 0;
+	int time = 0;
+	
+	for(int i = 0; i < QUANTITY_OF_DISH_TYPES; i++) {
+		
+		mes[i] = message(all_dishes[i].get_dish_type());
+		time = all_dishes[i].get_wash_time();
+		int number = all_dishes[i].get_number_of_dishes();
+		mes[i].fd = 5;
+		
+		for(int j = 0; j < number; j++) {
+			wash(time);
+			msgsnd(msqid, &mes[i], sizeof(class message) - sizeof(long), 0);
+		}
+		
+		message_number++;
 	}
+	while(1);
 }
-	
-	
-void dishwasher_interaction(class dishwasher *all_types) {
-	int fd = 0;
-	if(mkfifo("IPC_fifo_file", 0777)) {
-		perror("mkfifo_dishwasher");
-		exit(21);
-	}
-	fd = open("IPC_fifo_file", O_WRONLY);
-	if(fd == -1) {
-		 perror("open_fifo_in_dishwasher");
-	 }
-	 for(int i = 0; i < QUANTITY_OF_DISH_TYPES; i++) {
-		 wash(all_types[i].get_wash_time());
-		 write_in_fifo(fd, all_types[i].get_dish_type());
-	 }
- }

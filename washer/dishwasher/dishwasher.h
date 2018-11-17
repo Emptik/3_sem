@@ -10,4 +10,5 @@ public:
 	void show_all_values();
 	int get_wash_time() { return wash_time; }
 	char *get_dish_type() { return dish_type; }
+	int get_number_of_dishes() { return number_of_dishes; }
 }; 
