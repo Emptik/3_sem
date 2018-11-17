@@ -1,15 +1,16 @@
 #include <cstdio>
 #include <cstdlib> 
-#define STRING_MAX_SIZE 100
-#define QUANTITY_OF_DISH_TYPES 3
+#include <iostream>
+
+#include "macro.h"
 
 void read_input(char *input_string) {
 	int i = -1;
 	do {
 		i++;
 		if (i >= STRING_MAX_SIZE) {
-			printf("Too big string\n");
-			exit(1);
+			cout << "Too big string" << endl;
+			exit(11);
 		}
 		input_string[i] = getchar();
 	} while (input_string[i] != EOF);
