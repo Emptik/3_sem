@@ -14,7 +14,6 @@
 
 void wipe(int time) {
 	for(int i = 0; i < time; i++);
-	fprintf(stderr, "check\n");
 }
 
 void wiper_interact(class wiper *all_dishes) {
@@ -27,14 +26,11 @@ void wiper_interact(class wiper *all_dishes) {
 	
 	while(1) {
 		msgrcv(msqid, &mes, sizeof(class message) - sizeof(long), 1, 0);
-		perror("f");
 		for(int i = 0; i < QUANTITY_OF_DISH_TYPES; i++) {
-			fprintf(stderr, "%s\n", mes.dish);
-			//if(strcmp(mes.get_dish(), all_dishes[i].get_dish_type()) == 0) {
-				//wipe(all_dishes[i].get_wipe_time());
-				//break;
-				exit(25);
-			//}
+			if(strcmp(mes.get_dish(), all_dishes[i].get_dish_type()) == 0) {
+				wipe(all_dishes[i].get_wipe_time());
+				break;
+			}
 		}
 	}
 }
