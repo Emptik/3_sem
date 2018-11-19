@@ -17,7 +17,7 @@
 void wipe(int time, char *name) {
 	int i = 0;
 	for(i = 0; i < time; i++);
-	fprintf(stderr, "A dish named '%s' is succefuly washed for %d tacts\n", name, i);
+	fprintf(stderr, "A dish named '%s' is succefuly wiped for %d tacts\n", name, i);
 }
 
 void semaphore_change(int semid, int n) {
