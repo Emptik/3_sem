@@ -1,3 +1,5 @@
+#define WIPER_QUANTITY_OF_DISH_TYPES 5
+
 class wiper {
 	int wipe_time;
 	char *dish_type;

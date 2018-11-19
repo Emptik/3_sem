@@ -10,7 +10,7 @@ void write_information_to_dishwasher(char *dish_information, class dishwasher al
 void dishwasher_interact(class dishwasher *all_dishes);
 
 int main() {
-	class dishwasher all_dishes[QUANTITY_OF_DISH_TYPES] = {};
+	class dishwasher all_dishes[DISHWASHER_QUANTITY_OF_DISH_TYPES] = {};
 	char input_string[STRING_MAX_SIZE] = {0};
 	read_input(input_string);
 	write_information_to_dishwasher(input_string, all_dishes);

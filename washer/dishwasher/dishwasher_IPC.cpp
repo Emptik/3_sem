@@ -59,11 +59,11 @@ void dishwasher_interact(class dishwasher *all_dishes) {
 		exit(25);
 	}
 	
-	class message mes[QUANTITY_OF_DISH_TYPES] = {};
+	class message mes[DISHWASHER_QUANTITY_OF_DISH_TYPES] = {};
 	int message_number = 0;
 	int time = 0;
 	
-	for(int i = 0; i < QUANTITY_OF_DISH_TYPES; i++) {
+	for(int i = 0; i < DISHWASHER_QUANTITY_OF_DISH_TYPES; i++) {
 		
 		mes[i] = message(all_dishes[i].get_dish_type());
 		time = all_dishes[i].get_wash_time();

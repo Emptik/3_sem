@@ -44,7 +44,7 @@ void dishwasher::show_all_values() {
 
 void write_information_to_dishwasher(char *dish_information, class dishwasher all_dishes[]) { 
 	all_dishes[0] = dishwasher(strtok(dish_information,"\0"));
-	for(int i = 1; i < QUANTITY_OF_DISH_TYPES; i++) {
+	for(int i = 1; i < DISHWASHER_QUANTITY_OF_DISH_TYPES; i++) {
 		all_dishes[i] = dishwasher(strtok(NULL, "\0"));
 	}
 }

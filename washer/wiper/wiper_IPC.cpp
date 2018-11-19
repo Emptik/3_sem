@@ -62,7 +62,7 @@ void wiper_interact(class wiper *all_dishes) {
 	class message mes;
 	while(1) {
 		msgrcv(msqid, &mes, sizeof(class message) - sizeof(long), 1, 0);
-		for(int i = 0; i < QUANTITY_OF_DISH_TYPES; i++) {
+		for(int i = 0; i < WIPER_QUANTITY_OF_DISH_TYPES; i++) {
 			if(strcmp(mes.get_dish(), all_dishes[i].get_dish_type()) == 0) {
 				wipe(all_dishes[i].get_wipe_time(), all_dishes[i].get_dish_type());
 				semaphore_change(semid, -1);

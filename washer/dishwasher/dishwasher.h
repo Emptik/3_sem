@@ -1,3 +1,5 @@
+#define DISHWASHER_QUANTITY_OF_DISH_TYPES 8
+
 class dishwasher {
 	int wash_time;
 	char *dish_type;
