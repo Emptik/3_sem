@@ -89,12 +89,12 @@ void send_mes(char *sendline, struct sockaddr_in servaddr, int sockfd) {
 
 void introduce_youself(char *sendline, struct sockaddr_in servaddr, int sockfd) {
 	printf("Please,say your name:\n");
-	fgets(sendline, 100, stdin);
+	fgets(sendline, MAX_MESSAGE_LENGTH, stdin);
 	send_mes(sendline, servaddr, sockfd);
 	printf("Name of a person you wanna write:\n");
 }
 
 void name_pers_you_wanna_write(char *sendline, struct sockaddr_in servaddr, int sockfd) {
-	fgets(sendline, 100, stdin);
+	fgets(sendline, MAX_MESSAGE_LENGTH, stdin);
 	send_mes(sendline, servaddr, sockfd);
 }
