@@ -1,13 +1,15 @@
 #include <sys/types.h>
 #include <sys/socket.h>
-#include <stdlib.h>
+#include <signal.h>    
 #include <netinet/in.h>
 #include <arpa/inet.h>
-#include <string.h>
-#include <stdio.h>
+#include <assert.h>
 #include <errno.h>
 #include <unistd.h>
-#include <assert.h>
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
 
 #define SIZE_OF_PREFIX 4
 #define MAX_MESSAGE_LENGTH 100
@@ -60,7 +62,10 @@ int main(int argc, char **argv){
 			}
 			fgets(sendline, MAX_MESSAGE_LENGTH, stdin);
 			send_mes(sendline, servaddr, sockfd);
-			if(!strcmp(sendline, "/exit\n")) break;
+			if(!strcmp(sendline, "/exit\n")) {
+				kill(pid, SIGKILL);
+				break;
+			}
 		}
 	}
 	else while(1) rec_mes(recvline, sockfd);
