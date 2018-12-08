@@ -9,6 +9,11 @@
 #include <unistd.h>
 #include <assert.h>
 
+#define SIZE_OF_PREFIX 4
+#define MAX_MESSAGE_LENGTH 100
+#define RECIEVE_MAX_MESSAGE_LENGTH 200
+
+
 void send_mes(char *sendline, struct sockaddr_in servaddr, int sockfd);
 void introduce_youself(char *sendline, struct sockaddr_in servaddr, int sockfd);
 void name_pers_you_wanna_write(char *sendline, struct sockaddr_in servaddr, int sockfd);
@@ -17,8 +22,8 @@ void rec_mes(char *recvline, int sockfd);
 int main(int argc, char **argv){
 	int i = 0;
 	int sockfd = 0;
-	char recvline[1000] = {0};
-	char sendline[1000] = {0};
+	char recvline[MAX_MESSAGE_LENGTH] = {0};
+	char sendline[RECIEVE_MAX_MESSAGE_LENGTH] = {0};
 	struct sockaddr_in servaddr, cliaddr;
 	if(argc != 2){
 		printf("usage: a.out <IP>\n");
@@ -46,17 +51,16 @@ int main(int argc, char **argv){
 		exit(1);
 	}
 	
-	introduce_youself(sendline, servaddr, sockfd);
-	name_pers_you_wanna_write(sendline, servaddr, sockfd);
 	pid_t pid = fork();
 	if(pid) {
+		introduce_youself(sendline, servaddr, sockfd);
 		while(1) {
-			for(; i < 1000; i++) {
+			for(i = 0; i < MAX_MESSAGE_LENGTH; i++) {
 				sendline[i] = '\0';
 			}
-			fgets(sendline, 1000, stdin);
+			fgets(sendline, MAX_MESSAGE_LENGTH, stdin);
 			send_mes(sendline, servaddr, sockfd);
-			if(!strcmp(sendline, "/exit")) break;
+			if(!strcmp(sendline, "/exit\n")) break;
 		}
 	}
 	else while(1) rec_mes(recvline, sockfd);
@@ -66,8 +70,8 @@ int main(int argc, char **argv){
 
 void rec_mes(char *recvline, int sockfd) {
 	int i = 0;
-	recvfrom(sockfd, recvline, 1000, 0, (struct sockaddr *) NULL, NULL);
-	for(i = 0; i < 999; i++) {
+	recvfrom(sockfd, recvline, RECIEVE_MAX_MESSAGE_LENGTH, 0, (struct sockaddr *) NULL, NULL);
+	for(i = 0; i < RECIEVE_MAX_MESSAGE_LENGTH - 1; i++) {
 		if(recvline[i] == '\n') {
 			recvline[i + 1] = '\0';
 			break;
@@ -84,14 +88,13 @@ void send_mes(char *sendline, struct sockaddr_in servaddr, int sockfd) {
 }
 
 void introduce_youself(char *sendline, struct sockaddr_in servaddr, int sockfd) {
-	printf("Please,say your name: ");
-	fgets(sendline, 1000, stdin);
+	printf("Please,say your name:\n");
+	fgets(sendline, 100, stdin);
 	send_mes(sendline, servaddr, sockfd);
-	printf("Name of a person you wanna write: ");
+	printf("Name of a person you wanna write:\n");
 }
 
 void name_pers_you_wanna_write(char *sendline, struct sockaddr_in servaddr, int sockfd) {
-	fgets(sendline, 1000, stdin);
+	fgets(sendline, 100, stdin);
 	send_mes(sendline, servaddr, sockfd);
-	printf("Ok, you have access to write to %s. Write /exit to exit the chat\n", sendline);
 }
