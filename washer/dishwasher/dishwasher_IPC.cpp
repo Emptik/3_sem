@@ -16,8 +16,9 @@
 
 void wash(int time, char *name) {
 	int i = 0;
-	for(i = 0; i < time; i++);
-	fprintf(stderr, "A dish named '%s' is succefuly washed for %d tacts\n", name, i);
+	//for(i = 0; i < time; i++);
+	sleep(time);
+	fprintf(stderr, "A dish named '%s' is succefuly washed for %d seconds\n", name, time);
 }
 
 void semaphore_change(int semid, int n) {
@@ -72,8 +73,8 @@ void dishwasher_interact(class dishwasher *all_dishes) {
 		for(int j = 0; j < number; j++) {
 			wash(time, all_dishes[i].get_dish_type());
 			semaphore_change(semid, 1);
-			while(semctl(semid, 0, GETVAL) == TABLE_LIMIT);
 			msgsnd(msqid, &mes[i], sizeof(class message) - sizeof(long), 0);
+			while(semctl(semid, 0, GETVAL) == TABLE_LIMIT);
 		}
 		
 		message_number++;

@@ -1,4 +1,4 @@
-#define WIPER_QUANTITY_OF_DISH_TYPES 5
+#define WIPER_QUANTITY_OF_DISH_TYPES 3
 
 class wiper {
 	int wipe_time;
