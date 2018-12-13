@@ -7,7 +7,8 @@
 #include <stdlib.h>
 #include <assert.h>
 
-#define MAX_NUMBER_OF_PROCESSORS 4
+#define MAX_NUMBER_OF_PROCESSORS 1
+#define SLEEP_TIME 5
 
 using namespace std;
 
@@ -57,12 +58,12 @@ int main() {
 		if(!pid) {
 			info.multiply();
 			info.switch_client_pid_to_type();
+			sleep(SLEEP_TIME);
 			msgsnd(msqid, &info, sizeof(class client_info) - sizeof(long), 0);
-			sleep(5);
 			semaphore_change(-1, semid);
 			exit(0);
 		}
-		fprintf(stderr, "%d\n", semctl(semid, 0, GETVAL));
+		//fprintf(stderr, "%d\n", semctl(semid, 0, GETVAL));
 		while(semctl(semid, 0, GETVAL) == MAX_NUMBER_OF_PROCESSORS);						//Wait, if system can't create new proccess.
 	}
 }
