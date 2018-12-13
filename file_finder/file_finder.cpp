@@ -9,14 +9,16 @@
 #include <assert.h>
 #include <errno.h>
 
+#define MAX_SIZE_OF_CURRENT_DIR_NAME 1000
+
 using namespace std;
 
 void make_path(char *path, char *current_dir, char *d_name, struct stat *buf);
 void find_file(char *current_dir, int depth, char *needed_file);
  
 int main(int argc, char * argv[]) {
-	char a[1000] = {0};
-	strcpy(a, "/");
+	char a[MAX_SIZE_OF_CURRENT_DIR_NAME] = {0};
+	strcpy(a, "..");
 	find_file(a, atoi(argv[1]), argv[2]);
 	cout << endl;
 }
@@ -35,8 +37,8 @@ void find_file(char *current_dir, int depth, char *needed_file) {
 		if(id == NULL) {
 			break;
 		}
-		char path[1000] = {0};
-		//cout << current_dir << endl;
+		char path[MAX_SIZE_OF_CURRENT_DIR_NAME] = {0};
+	//	cout << current_dir << endl;
 		make_path(path, current_dir, id->d_name, &buf);
 		if(S_ISDIR(buf.st_mode)) {
 			if(depth != 0) {
